@@ -1,0 +1,45 @@
+class AppUrl {
+  static var baseUrl = 'https://collegeprojectz.com/dizisalon/SALONAPI/';
+  static var imageApi = 'https://collegeprojectz.com/dizisalon/uploads/';
+  static var newBaseImage = 'https://collegeprojectz.com/dizisalon/uploads/salon_gallery/' ;
+  // static var ferantaAbout = 'https://www.feranta.in/about-us/';
+  // static var ferantaPrivacy = 'https://www.feranta.in/privacy-policy/';
+  // static var ferantaTerms = 'https://www.feranta.in/term-and-condition/';
+  // static var ferantaCustomer = 'https://www.feranta.in/contact/';
+
+  static var home = 'Home';
+  static var trendingStyle = 'trending_style';
+  static var latestArticleList = 'latest_articles';
+   static var trendingStyleDtls = 'trending_styleDetails';
+  static var latestArticleListDtls = 'latest_articlesDetails';
+  static var barberList = 'AllBarber';
+  static var singleBarber = 'singleUser';
+  static var deleteBarber = 'deleteUser';
+  static var addBarber = 'AddBarbar';
+  static var allFacilities = 'Facilities';
+  static var kycSubmit = 'kyc';
+  static var cms = 'cms';
+  static var addSalonService = 'Servicekyc';
+  static var service = 'service';
+  static var orderList = 'OrderList';
+  static var getCenterReview = 'getCenterReviews';
+  static var contactusForm = 'ContactUs';
+  static var updateOrderSts = 'updateAppointmentStatus';
+  static var GetOtop = 'Otp';
+  static var loginOtp = 'Login';
+  static var verifyOtp = 'VerifyOTP';
+  static var profile = 'profile';
+  static var resister = 'signup';
+  static var updateProfile = 'update_profile';
+  static var virationDtls = 'variation_dtls';
+  static var checkout = 'checkout';
+  static var search = 'search';
+  static var locn = 'location';
+  static var allvarition = 'allvariation_dtls';
+  static String orderAgain = '/order_add_to_cart';
+  static String gender = 'gender_master';
+  static String generateQr = 'generateQRCode';
+  static String userstatusUpdate = 'updateUserStatus';
+  static String salonService = 'getServiceWithBarber';
+  static String updateserviceStatus = 'updateservicestatus';
+}
