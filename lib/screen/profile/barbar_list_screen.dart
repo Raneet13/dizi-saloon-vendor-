@@ -256,11 +256,11 @@ class _BarberListScreenState extends State<BarberListScreen> {
                         ),),
                     // Text("Time: ${barber?.totime??""}"),
                     Text(
-                      barber?.presentStatus==0 ?"Absent": "Present" ,
+                      barber?.presentStatus =="0" ?"Absent": "Present" ,
                       style: GoogleFonts.montserrat(
                         fontSize: 14.sp,
                         fontWeight:FontWeight.bold,
-                        color: barber?.presentStatus==0 ? Colors.red:Colors.green,
+                        color: barber?.presentStatus=="0" ? Colors.red:Colors.green,
                         // fontWeight: FontWeight.w600,
                       ),
                     ),

@@ -21,7 +21,7 @@ class AppUrl {
   static var cms = 'cms';
   static var addSalonService = 'Servicekyc';
   static var service = 'service';
-  static var orderList = 'OrderList';
+  static var orderList = 'testmybooklist';
   static var getCenterReview = 'getCenterReviews';
   static var contactusForm = 'ContactUs';
   static var updateOrderSts = 'updateAppointmentStatus';
@@ -42,4 +42,11 @@ class AppUrl {
   static String userstatusUpdate = 'updateUserStatus';
   static String salonService = 'getServiceWithBarber';
   static String updateserviceStatus = 'updateservicestatus';
+  static String salonupdateserviceStatus = 'saloonupdateservicestatus';
+  static String salonSaleChart = 'saleChart';
+  static String googleMapkey ='AIzaSyAH2um5Dl3iVSCPj2u3F0igZwapRTMziK4';
+   static String languadge ='en';
+   static String region = 'IN';
+   static String removeGaleryImage="remove_center_gallery";
+   
 }

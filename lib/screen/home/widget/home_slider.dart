@@ -9,7 +9,8 @@ import '../../../model/home_model.dart';
 
 class HomeSlider extends StatefulWidget {
    List<AddDtl>? bannerDtl;
-   HomeSlider({this.bannerDtl, super.key});
+   bool dotFalse;
+   HomeSlider({this.bannerDtl, super.key,this.dotFalse=false});
 
   @override
   State<HomeSlider> createState() => _HomeSliderState();
@@ -82,7 +83,7 @@ class _HomeSliderState extends State<HomeSlider> {
           scrollDirection: Axis.horizontal,
            )
         ),
-        SizedBox(
+       widget.dotFalse?SizedBox(): SizedBox(
           height: 20,
            child: DotsIndicator(
                  dotsCount: widget.bannerDtl!.length,

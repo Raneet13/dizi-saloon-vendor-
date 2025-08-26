@@ -16,7 +16,7 @@ enum BookingStatus {
   cancelled,
 }
 class BookingItem extends StatelessWidget {
-  final OrderList? orderItem;
+  final Appointment? orderItem;
 
   const BookingItem({
     super.key,
@@ -115,7 +115,7 @@ class BookingItem extends StatelessWidget {
          Navigator.push(context, MaterialPageRoute(builder: (context)=>customerDetails(orderItem: orderItem,)));
       },
       child: Container(
-        height: 100,
+        height: 100.h,
         padding: const EdgeInsets.only(right: 8),
         decoration: BoxDecoration(
           border: Border(
@@ -153,7 +153,7 @@ class BookingItem extends StatelessWidget {
                     
                     image: DecorationImage(
                       fit: BoxFit.cover,
-                      image:orderItem?.profileImage!=null? NetworkImage("${AppUrl.imageApi}${orderItem?.profileImage??""}"):AssetImage("assets/image/no_image.png"))
+                      image:orderItem?.customerProfile!=null? NetworkImage("${AppUrl.imageApi}${orderItem?.customerProfile??""}"):AssetImage("assets/image/no_image.png"))
                   ),
                 ),
             // Container(
@@ -178,7 +178,7 @@ class BookingItem extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                          Text(
-                              orderItem?.userName??"",
+                              orderItem?.customerName??"",
                               style: const TextStyle(
                                 fontWeight: FontWeight.w500,
                                 fontSize: 15,
@@ -209,7 +209,7 @@ class BookingItem extends StatelessWidget {
                        
                         const SizedBox(height: 4),
                         Text(
-                          '+91 ${orderItem?.userPhone??""}',
+                          '+91 ${orderItem?.customerContact??""}',
                           style: TextStyle(
                             color: Colors.grey[600],
                             fontSize: 13,
@@ -218,7 +218,7 @@ class BookingItem extends StatelessWidget {
                         const SizedBox(height: 4),
                         
                             Text(
-                              orderItem?.serviceName??"",
+                              "${orderItem?.services?.map((t)=>t.serviceName??"").toList().join(",")??""}",
                               style: TextStyle(
                                 color: Colors.grey[600],
                                 fontSize: 13,
@@ -258,7 +258,7 @@ class BookingItem extends StatelessWidget {
                               
                               Icon(
                                 Icons.location_on,
-                                size: 14,
+                                size: 14.sp,
                                 color: Colors.grey[600],
                               ),
                               const SizedBox(width: 4),
@@ -269,13 +269,13 @@ class BookingItem extends StatelessWidget {
                                 softWrap: true,
                                 style: TextStyle(
                                   color: Colors.grey[600],
-                                  fontSize: 13,
+                                  fontSize: 13.sp,
                                 ),
                               ),
                             ],
                           ),
-                        const SizedBox(height: 8),
-                       orderItem?.isConfirm=="4"?SizedBox():  _buildStatusWidget("${orderItem?.isConfirm=="0"?"Confirm": orderItem?.isConfirm=="1"?"Complete": orderItem?.isConfirm=="2"?"Pending": "Cancel"}", context),
+                         SizedBox(height: 8.h),
+                       orderItem?.isConfirm=="4"?SizedBox():  _buildStatusWidget("${orderItem?.isConfirm=="0"?"Confirm": orderItem?.isConfirm=="1"?"Complete": orderItem?.isConfirm=="3"?"Cancellled":""}", context),
                       ],
                                       ),
                     )
@@ -300,7 +300,7 @@ class BookingItem extends StatelessWidget {
         return InkWell(
           onTap: (){
              if (orderItem?.isConfirm=="0") {
-                                            salon.updateOrder(apontId: orderItem?.id??"", status: "1");
+                                            salon.updateOrder(apontId: orderItem?.appointmentId??"", status: "1");
                                           } else if(orderItem?.isConfirm=="1"){
                                         
                                           //  await salon.generateQr(orderId: "1",customerName: "Dibya")
@@ -313,8 +313,8 @@ class BookingItem extends StatelessWidget {
                                                     context,
                                                     MaterialPageRoute(
                                                       builder: (context) => ShowqrScreen(
-                                                        orderId: orderItem?.id??"",
-                                                        customerName: orderItem?.userName??"",
+                                                        orderId: orderItem?.appointmentId??"",
+                                                        customerName: orderItem?.customerName??"", singleback: true,
                                                       ),
                                                     ),
                                                   );
@@ -324,7 +324,7 @@ class BookingItem extends StatelessWidget {
                                           }
           },
           child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+            padding:  EdgeInsets.symmetric(horizontal: 12.sp, vertical: 4.sp),
             decoration: BoxDecoration(
               color: Colors.green,
               borderRadius: BorderRadius.circular(4),

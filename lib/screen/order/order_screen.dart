@@ -46,13 +46,13 @@ class _OrderScreenState extends State<OrderScreen> {
                
                 SizedBox(height: 16),
                 Expanded(
-                  child: salon.allOrderlist.value.messages?.appointments?.orderList?.length==0?Center(child: Text("No Booking"),):
-                  salon.allOrderlist.value.messages?.appointments?.orderList?.length==0?Center(child: Text("No Booking"),):
+                  child: salon.allOrderlist.value.messages?.appointments?.length==0?Center(child: Text("No Booking"),):
+                  salon.allOrderlist.value.messages?.appointments?.length==0?Center(child: Text("No Booking"),):
                    ListView.builder(
                     shrinkWrap: true,
-                    itemCount: salon.allOrderlist.value.messages?.appointments?.orderList?.length??0,
+                    itemCount: salon.allOrderlist.value.messages?.appointments?.length??0,
                     itemBuilder: (context, index) {
-                      var orderItem = salon.allOrderlist.value.messages?.appointments?.orderList?[index];
+                      var orderItem = salon.allOrderlist.value.messages?.appointments?[index];
                      return BookingItem(
                       orderItem: orderItem,
                               // indicatorColor: Colors.green,

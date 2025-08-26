@@ -41,6 +41,21 @@ class SalonApiRepository {
     return response;
   }
   //kyc 
+   Future removeGalleryImage({required String galleryId}) async {
+    late var response;
+
+    try {
+   FormData formData =
+          FormData.fromMap({'center_gallery_id': galleryId});
+      response = await NetworkApiService()
+          .postApi(url: AppUrl.removeGaleryImage, formData: formData);
+      // response = await loginOtpModel.fromJson(data);
+    } catch (e) {
+      throw Exception(e);
+    }
+    return response;
+  }
+   
    Future updateKycSalon({
     required String userId,
     required String salonName,
@@ -57,9 +72,11 @@ class SalonApiRepository {
     required String openTime,
     required String closeTime,
     required String launchTime,
+    required String launchTimeClose,
    required String noSeat,
    required List<facilities.Datum> allFacility,
-   required List<Map<String,bool>> weakSelection, 
+   required List<Map<String,bool>> weakSelection,
+   
     // 
   }) async {
     late var response;
@@ -74,23 +91,26 @@ class SalonApiRepository {
 'pincode':pincode,
 'logo_image':logoimage,
 'address_proof':addrprofimage,
+'lat':lat,
+'lng':lng,
 // services[0][id]:1
 // services[0][price]:150
 'open_time':openTime,
 'close_time':closeTime,
 'lunch_time':launchTime,
+'lunch_time_end':launchTimeClose,
 'no_of_salon_seat':noSeat
       };
 //       for (int i = 0; i < services.length; i++) {
 //   formMap['services[$i][id]'] = services[i]['id'].toString();
 //   formMap['services[$i][price]'] = services[i]['price'].toString();
 // }
-  if (updateUserId!="") {
+  if (updateUserId !="") {
         formMap['update_user_id']=updateUserId;
       }
     for (int i = 0; i < allFacility.length; i++) {
-  formMap['facilities[$i]'] = allFacility[i].facilitiesId.toString();
-}
+      formMap['facilities[$i]'] = allFacility[i].facilitiesId.toString();
+    }
    for (int i = 0; i < salonimages.length; i++) {
   formMap['salon_images[$i]'] = salonimages[i];
 }
@@ -122,8 +142,12 @@ FormData formData = FormData.fromMap(formMap);
       // FormData formData =
       //     FormData.fromMap({});
              for (int i = 0; i < services.length; i++) {
-  formMap['services[$i]'] = services[i].serviceMasterId.toString();
+   final service = services[i];
+  if (service != null) {
+    formMap['services[$i]'] = service.serviceMasterId.toString();
+  }
 }
+
 FormData formData = FormData.fromMap(formMap);
       response = await NetworkApiService()
           .postApi(url: AppUrl.addSalonService, formData: formData);
@@ -138,7 +162,7 @@ FormData formData = FormData.fromMap(formMap);
 
     try {
    FormData formData =
-          FormData.fromMap({'center_id': userId});
+          FormData.fromMap({'user_id': userId});
       response = await NetworkApiService()
           .postApi(url: AppUrl.orderList, formData: formData);
       // response = await loginOtpModel.fromJson(data);
@@ -229,6 +253,36 @@ FormData formData = FormData.fromMap(formMap);
           FormData.fromMap({'user_id': centerId,'service_id':serviceId,'pricing':price,'sercice_status':serciceStatus});
       response = await NetworkApiService()
           .postApi(url: AppUrl.updateserviceStatus,formData: formData);
+
+      // response = await loginOtpModel.fromJson(data);
+    } catch (e) {
+      throw Exception(e);
+    }
+    return response;
+  }
+     Future updatesalonService({required String serviceId,required String centerId,required String serciceStatus}) async {
+    late var response;
+
+    try {
+      FormData formData =
+          FormData.fromMap({'user_id': centerId,'service_id':serviceId,'sercice_status':serciceStatus});
+      response = await NetworkApiService()
+          .postApi(url: AppUrl.salonupdateserviceStatus,formData: formData);
+
+      // response = await loginOtpModel.fromJson(data);
+    } catch (e) {
+      throw Exception(e);
+    }
+    return response;
+  }
+     Future removeGalleryimage({required String galleryId}) async {
+    late var response;
+
+    try {
+      FormData formData =
+          FormData.fromMap({'center_gallery_id': galleryId});
+      response = await NetworkApiService()
+          .postApi(url: AppUrl.removeGaleryImage,formData: formData);
 
       // response = await loginOtpModel.fromJson(data);
     } catch (e) {

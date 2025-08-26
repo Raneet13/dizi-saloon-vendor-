@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../home/domy_home_screen.dart';
 import '../navigation/bottom_navigation.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -38,7 +39,7 @@ class _SplashScreenState extends State<SplashScreen> {
               Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => SignInScreen(),
+                                  builder: (context) => DomyHomeScreen(),//DomyHomeScreen(),//SignInScreen()
                                 ),result: (route)=>false
                               );
             }

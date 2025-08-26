@@ -54,7 +54,7 @@ final review = Get.find<SalonViewmodel>();
               crossAxisCount: 2,
               mainAxisSpacing: 16,
               crossAxisSpacing: 16,
-              childAspectRatio: 3 / 4.5,
+              // childAspectRatio: 3 / 4.5,
             ),
             itemCount: review.centerallReview.value.messages?.reviews?.length, // Number of feedback cards
             itemBuilder: (context, index) {
@@ -90,13 +90,14 @@ class FeedbackCard extends StatelessWidget {
         padding: const EdgeInsets.all(12.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             // Profile picture
-            CircleAvatar(
-              radius: 30,
-              backgroundImage: AssetImage('assets/images/user_placeholder.png'),
-            ),
-            const SizedBox(height: 8),
+            // CircleAvatar(
+            //   radius: 30,
+            //   backgroundImage: AssetImage('assets/images/user_placeholder.png'),
+            // ),
+            // const SizedBox(height: 8),
             // Name
              Text(
               "${reviewDetails?.senderName??""}",
@@ -140,23 +141,24 @@ class FeedbackCard extends StatelessWidget {
                 color: Colors.grey,
               ),
             ),
-            const Spacer(),
-            // Reply button
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () {
-                  // Handle reply button press
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue.shade900,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                ),
-                child: const Text("Reply"),
-              ),
-            ),
+            // const Spacer(),
+            // // Reply button
+            // SizedBox(
+            //   width: double.infinity,
+            //   child: ElevatedButton(
+            //     onPressed: () {
+            //       // Handle reply button press
+            //     },
+            //     style: ElevatedButton.styleFrom(
+            //       backgroundColor: Colors.blue.shade900,
+            //       shape: RoundedRectangleBorder(
+            //         borderRadius: BorderRadius.circular(8),
+            //       ),
+            //     ),
+            //     child: const Text("Reply"),
+            //   ),
+            // ),
+          
           ],
         ),
       ),

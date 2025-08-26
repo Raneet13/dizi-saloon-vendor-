@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:dizisalon_vender/data/app_url.dart';
 import 'package:dizisalon_vender/model/home_model.dart';
+import 'package:dizisalon_vender/screen/home/widget/select_location.dart';
 import 'package:dizisalon_vender/screen/salon_service/salon_service_screen.dart';
 import 'package:dizisalon_vender/static/show_toast/showTost_msg.dart';
 import 'package:dizisalon_vender/view_model/salon_viewmodel.dart';
@@ -14,7 +15,7 @@ import 'package:intl/intl.dart';
 
 import '../../../view_model/home_viewmodel.dart';
 import '../../mysalon/list_barber_form.dart';
- final home = Get.find<SalonViewmodel>();
+ 
 // BuildContext? ctx = Get.context;
 
 class SalonKycform extends StatefulWidget {
@@ -28,6 +29,7 @@ class SalonKycform extends StatefulWidget {
 
 class _SalonKycformState extends State<SalonKycform> {
      final _formKey = GlobalKey<FormState>();
+     final home = Get.find<SalonViewmodel>();
   @override
   void initState() {
     // TODO: implement initState
@@ -36,7 +38,7 @@ class _SalonKycformState extends State<SalonKycform> {
         .addPostFrameCallback((_) {
           if (home.allFacilities.value.data==null) {
             home.allFacilitiesList();
-          }else
+          }
           
           // .then((v){
           //   if (v) {
@@ -294,108 +296,92 @@ class _SalonKycformState extends State<SalonKycform> {
                 home.getImages();
               }, child: Text("Select", style: GoogleFonts.montserrat(fontSize: 14.sp,color: Colors.white,fontWeight: FontWeight.bold))),
               SizedBox(width: 10),
-               home.salonImages.value.length>0||home.salonImages_kyc.value.length>0?
-                Obx(
-                  ()=> Flexible(
-                    child: SizedBox(
-                      height: 50,
-                      // width: 200,
-                      child:home.salonImages.value.length>0? ListView.builder(
-                        itemCount: home.salonImages.value.length,
-                        shrinkWrap: true,
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: (context,iint) {
-                          // return Container(height: 30,width: 30, color: Colors.red,);
-                          return Padding(
-                            padding: EdgeInsets.only(right: 8),
-                            child: Stack(
-                              children: [
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(8), // Optional: for rounded square
-                                  child: Image.file(
-                                    home.salonImages.value[iint]!,
-                                    width: 50,
-                                    height: 50,
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                                Positioned(
-                                  top: 0,
-                                  right: 0,
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      // Remove the image logic
-                                      home.removeImage(iint);
-                                    },
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        color: Colors.black.withOpacity(0.6),
-                                        shape: BoxShape.circle,
-                                      ),
-                                      padding: const EdgeInsets.all(4),
-                                      child: const Icon(
-                                        Icons.close,
-                                        color: Colors.white,
-                                        size: 16,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
+               Obx(
+                  ()=> home.salonImages.value.length>0||home.salonImages_kyc.value.length>0?
+                  home.isglryLoading.value?SizedBox(height: 20,width: 20, child: Center(child: CircularProgressIndicator(),)):
+                Flexible(
+          child: SizedBox(
+            height: 50,
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: [
+                  // First list (local images)
+                  ...home.salonImages.value.map((file) => Padding(
+                    padding: const EdgeInsets.only(right: 8),
+                    child: Stack(
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(8),
+                          child: Image.file(
+                            file!,
+                            width: 50,
+                            height: 50,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        Positioned(
+                          top: 0,
+                          right: 0,
+                          child: GestureDetector(
+                            onTap: () => home.removeImage(home.salonImages.value.indexOf(file)),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: Colors.black.withOpacity(0.6),
+                                shape: BoxShape.circle,
+                              ),
+                              padding: const EdgeInsets.all(4),
+                              child: const Icon(Icons.close, color: Colors.white, size: 16),
                             ),
-                          );
-                        }
-                      ):ListView.builder(
-                        itemCount: home.salonImages_kyc.value.length,
-                        shrinkWrap: true,
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: (context,iint) {
-                          // return Container(height: 30,width: 30, color: Colors.red,);
-                          return Padding(
-                            padding: EdgeInsets.only(right: 8),
-                            child: Stack(
-                              children: [
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(8), // Optional: for rounded square
-                                  child: Image.network(
-                                    "${AppUrl.newBaseImage}${home.salonImages_kyc.value[iint]!}",
-                                    width: 50,
-                                    height: 50,
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                                // Positioned(
-                                //   top: 0,
-                                //   right: 0,
-                                //   child: GestureDetector(
-                                //     onTap: () {
-                                //       // Remove the image logic
-                                //       home.removeImage(iint);
-                                //     },
-                                //     child: Container(
-                                //       decoration: BoxDecoration(
-                                //         color: Colors.black.withOpacity(0.6),
-                                //         shape: BoxShape.circle,
-                                //       ),
-                                //       padding: const EdgeInsets.all(4),
-                                //       child: const Icon(
-                                //         Icons.close,
-                                //         color: Colors.white,
-                                //         size: 16,
-                                //       ),
-                                //     ),
-                                //   ),
-                                // ),
-                              
-                              ],
-                            ),
-                          );
-                        }
+                          ),
+                        ),
+                      ],
+                    ),
+                  )),
+
+          // Second list (network images)
+          // home.isglryLoading.value?Center(child: CircularProgressIndicator(),):
+          
+          ...home.salonImages_kyc.value.map((url) => Padding(
+            padding: const EdgeInsets.only(right: 8),
+            child: Stack(
+              // fit: StackFit.expand,
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(8),
+                  child: Image.network(
+                    "${AppUrl.newBaseImage}${url.centeImage??""}",
+                    width: 50,
+                    height: 50,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                 Positioned(
+                  top: 0,
+                  right: 0,
+                  child: GestureDetector(
+                    onTap: () => home.removeGalleryPhoto(galleryId: url.centerGalleryId??"",salonId: widget.saalon?.id??""),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.black.withOpacity(0.6),
+                        shape: BoxShape.circle,
                       ),
+                      padding: const EdgeInsets.all(4),
+                      child: const Icon(Icons.close, color: Colors.white, size: 16),
                     ),
                   ),
-                ): 
-                Text("No file selected", style: TextStyle(color: Colors.grey)),
+                ),
+              ],
+            ),
+          )),
+        ],
+      ),
+    ),
+  ),
+)
+                : 
+                Text("No file selected", style: TextStyle(color: Colors.grey))),
+            
             ],
           ),
         ),
@@ -494,14 +480,38 @@ class _SalonKycformState extends State<SalonKycform> {
                 Text("Lunch Time:",style: GoogleFonts.montserrat(fontSize: 14.sp,color: Colors.white,fontWeight: FontWeight.bold),),
                 Container(
                   height: 50,
-                  width: 30,
+                  width: 60.w,
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
               color:  Colors.white,
               
               borderRadius: BorderRadius.circular(4)
             ),
-            child: Text("1 hr",style: TextStyle(color: Colors.black),), 
+            child:DropdownButtonHideUnderline(
+    child: DropdownButton<String>(
+      iconSize: 16.sp,
+      isDense: true,
+      value: home.launchTimeend.value,
+      isExpanded: true,
+      alignment: AlignmentDirectional.bottomEnd,
+      dropdownColor: Colors.white,
+      icon: Icon(Icons.keyboard_arrow_down),
+      items: ['1','2','3'].map((hour) {
+        return DropdownMenuItem<String>(
+          alignment: Alignment.center,
+          value: hour,
+          child: Padding(
+            padding:  EdgeInsets.only(left: 4.sp),
+            child: Text("${hour}hr",textAlign: TextAlign.center, style: TextStyle(color: Colors.black)),
+          ),
+        );
+      }).toList(),
+      onChanged: (value) {
+        home.updateLaunchTime(value!);
+      },
+    ),
+  ),
+            //  Text("1 hr",style: TextStyle(color: Colors.black),), 
                 )
               ],
             ),
@@ -580,7 +590,9 @@ class _SalonKycformState extends State<SalonKycform> {
       children: [
         Expanded(
           child: TextField(
-            
+            controller: home.salonAddr,
+            // controller: TextEditingController(
+            //   text: "${home.mySelectPlace.value.results?.first.formattedAddress??""}"),
             decoration: InputDecoration(
               hintText: "Salon Location on Map",
               hintStyle: GoogleFonts.montserrat(fontSize: 15.sp),
@@ -589,10 +601,12 @@ class _SalonKycformState extends State<SalonKycform> {
               ),
               
               suffixIcon:  Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding:  EdgeInsets.all(8.0.sp),
                 child: SizedBox(
                   height: 40,
-                  child: ElevatedButton(onPressed: () {}, child: Text("Open Map",style: GoogleFonts.montserrat(fontSize: 14.sp,color: Colors.white,fontWeight: FontWeight.bold),))),
+                  child: ElevatedButton(onPressed: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>ChooseLocation()));
+                  }, child: Text("Open Map",style: GoogleFonts.montserrat(fontSize: 14.sp,color: Colors.white,fontWeight: FontWeight.bold),))),
               )
             ),
           ),
@@ -631,14 +645,16 @@ class _SalonKycformState extends State<SalonKycform> {
                       if (v) {
                        await Get.find<HomeViewmodel>().home();
                         // return Navigator.pop(context);
-                        WidgetsBinding.instance.addPostFrameCallback((_){
+                        if (!widget.isEdit) {
+                          WidgetsBinding.instance.addPostFrameCallback((_){
                          Navigator.push(context, MaterialPageRoute(builder: (context)=>ServiceListScreen(saalon: widget.saalon,)));
                         });
+                        }
+                        
                       }
                     });
                     }
                   }
-                  
                   // Navigator.push(context,MaterialPageRoute(builder: (context)=>BarberListingScreen()));
                 },
                 style: ElevatedButton.styleFrom(

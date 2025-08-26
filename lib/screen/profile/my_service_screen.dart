@@ -122,7 +122,7 @@ void showShavingDialog(BuildContext context,Barber? barberdetails) {
                 onPressed: () {
                   Navigator.pop(context);
                   // print(service.priceController.text);
-                  service.updateService(serviceId: barberdetails?.barberServiceId??"", centerId: barberdetails?.barberUserId??"", serciceStatus:"1",price: service.priceController.text,time: service.timeController.text);
+                  service.updateService(serviceId: barberdetails?.barberServiceId??"", centerId: barberdetails?.barberUserId??"", serciceStatus:barberdetails?.barServiceStatus??"0",price: service.priceController.text,time: service.timeController.text);
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFF002B5B),

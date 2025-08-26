@@ -84,6 +84,22 @@ class HomeApiRepository {
     }
     return response;
   }
+  Future saleChartRepo({required String userId,required String fromDate,required String toDate}) async {
+    late var response;
+
+    try {
+      FormData formData =
+          FormData.fromMap({'user_id': userId,'from_date': fromDate,'to_date': toDate});
+          // print(formData.fields);
+      response = await NetworkApiService()
+          .postApi(url: AppUrl.salonSaleChart,formData: formData);
+
+      // response = await loginOtpModel.fromJson(data);
+    } catch (e) {
+      throw Exception(e);
+    }
+    return response;
+  }
    Future cmseRepo() async {
     late var response;
 

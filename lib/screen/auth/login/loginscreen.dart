@@ -24,64 +24,74 @@ class _SignInScreenState extends State<SignInScreen> {
   
    final login = Get.find<AuthViewmodel>();
     return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: true,
+        actions: [
+            ClipRRect(
+                              borderRadius: BorderRadius.circular(4),
+                              child: Image.asset(
+                                'assets/image/splash_logo.png',
+                                // height: 50.h,
+                                width: 115.w,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            SizedBox(width: 14.w,)
+        ],
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(10.0),
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.all(14.0),
             child: Form(
               key: _formKeyy,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Row(
-                    children: [
-                      const Spacer(),
-                      Container(
-                        height: 40,
-                        padding: const EdgeInsets.symmetric(horizontal: 0),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(4),
-                              child: Image.asset(
-                                'assets/image/splash_logo.png',
-                                height: 50,
-                                width: 150,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                            // const SizedBox(width: 8),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 20),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(12),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.1),
-                          blurRadius: 10,
-                          spreadRadius: 3,
-                          offset: const Offset(0, 0),
-                        ),
-                      ],
-                    ),
-                    padding: const EdgeInsets.all(8),
-                    child: Image.asset(
-                      'assets/image/pointer.png',
-                      height: 47,
-                      width: 47,
-                    ),
-                  ),
-                  const SizedBox(height: 20),
+                  // Row(
+                  //   children: [
+                  //     const Spacer(),
+                  //     Container(
+                  //       height: 40,
+                  //       padding: const EdgeInsets.symmetric(horizontal: 0),
+                  //       decoration: BoxDecoration(
+                  //         borderRadius: BorderRadius.circular(8),
+                  //       ),
+                  //       child: Row(
+                  //         mainAxisSize: MainAxisSize.min,
+                  //         children: [
+                            
+                  //           // const SizedBox(width: 8),
+                  //         ],
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
+                  // // const SizedBox(height: 20),
+                  // Container(
+                  //   decoration: BoxDecoration(
+                  //     color: Colors.white,
+                  //     borderRadius: BorderRadius.circular(12),
+                  //     boxShadow: [
+                  //       BoxShadow(
+                  //         color: Colors.black.withOpacity(0.1),
+                  //         blurRadius: 10,
+                  //         spreadRadius: 3,
+                  //         offset: const Offset(0, 0),
+                  //       ),
+                  //     ],
+                  //   ),
+                  //   padding: const EdgeInsets.all(8),
+                  //   child: Image.asset(
+                  //     'assets/image/pointer.png',
+                  //     height: 47.h,
+                  //     width: 47.h,
+                  //     fit: BoxFit.cover,
+                  //   ),
+                  // ),
+                  
+                  // const SizedBox(height: 20),
                    Text(
                     'Sign in',
                     style:  GoogleFonts.montserrat(
@@ -116,7 +126,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     ],
                     decoration: InputDecoration(
                       hintText: 'Enter your mobile number',
-                      prefixIcon: SizedBox(width: 20, child: Align(alignment: Alignment.centerRight, child: Text("+91  "))),
+                      prefixIcon: SizedBox(width: 20.w, child: Align(alignment: Alignment.centerRight, child: Text("+91  "))),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8),
                         borderSide: BorderSide(color: Colors.grey[300]!),
@@ -138,7 +148,7 @@ class _SignInScreenState extends State<SignInScreen> {
                   const SizedBox(height: 20),
                   SizedBox(
                     width: double.infinity,
-                    height: 50,
+                    height: 50.h,
                     child: Obx(
                       ()=> ElevatedButton(
                             onPressed: (){
@@ -169,7 +179,7 @@ class _SignInScreenState extends State<SignInScreen> {
                             child:login.isLoading.value?const Center(child: CircularProgressIndicator(),):  Text(
                               'Get OTP',
                               style:  GoogleFonts.montserrat(
-                                fontSize: 16,
+                                fontSize: 16.sp,
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -189,14 +199,14 @@ class _SignInScreenState extends State<SignInScreen> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text("Are you a New User?",style:  GoogleFonts.montserrat(
-                                fontSize: 16,
+                                fontSize: 16.sp,
                                 // color: const Color(0xFF002B5B),
                                 fontWeight: FontWeight.w500,
                               )),
                           TextButton(onPressed: (){
                             Navigator.push(context, MaterialPageRoute(builder: (context)=>SignUpScreen()));
                           }, child: Text("Please Sign up!",style:  GoogleFonts.montserrat(
-                                fontSize: 16,
+                                fontSize: 16.sp,
                                 color: const Color(0xFF002B5B),
                                 fontWeight: FontWeight.w500,
                               ),))

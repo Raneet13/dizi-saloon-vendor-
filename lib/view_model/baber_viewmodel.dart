@@ -347,6 +347,7 @@ refresh();
       if (resp != null ) {//&& !resp["error"]
         isLoading(false);
         viewdetailsBarber(barberId: barberId);
+        allBarber();
         // rsp = resp["messages"]["status"]["Otp"].toString();
         // otp.value=resp["messages"]["status"]["Otp"].toString();
         // allorder.value = AllOrderModel.fromJson(resp);

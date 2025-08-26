@@ -298,7 +298,7 @@ class _BarberDetailsScreenState extends State<BarberDetailsScreen> {
               width: double.infinity,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor:barberdetails.barberdetails.value.messages?.data?.singleBarber?.presentStatus!="0"? Colors.red:Colors.green,
+                  backgroundColor:barberdetails.barberdetails.value.messages?.data?.singleBarber?.presentStatus=="0"? Colors.red:Colors.green,
                   minimumSize: const Size.fromHeight(40),
                 ),
                 onPressed: () {
@@ -308,7 +308,7 @@ class _BarberDetailsScreenState extends State<BarberDetailsScreen> {
                   
                   // print(barberdetails.barberdetails.value.messages?.data?.services?[0].toJson());
                 },
-                child:barberdetails.isLoading.value?Center(child: CircularProgressIndicator(),):  Text("${barberdetails.barberdetails.value.messages?.data?.singleBarber?.presentStatus!="0"?"Absent":"Present"}",style:  GoogleFonts.montserrat(fontSize: 14.sp,color: Colors.white,fontWeight: FontWeight.bold)),
+                child:barberdetails.isLoading.value?Center(child: CircularProgressIndicator(),):  Text("${barberdetails.barberdetails.value.messages?.data?.singleBarber?.presentStatus=="0"?"Absent":"Present"}",style:  GoogleFonts.montserrat(fontSize: 14.sp,color: Colors.white,fontWeight: FontWeight.bold)),
               ),
             )
                 ],

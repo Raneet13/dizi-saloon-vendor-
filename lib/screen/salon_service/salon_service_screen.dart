@@ -33,11 +33,10 @@ class _ServiceListScreenState extends State<ServiceListScreen> {
         .addPostFrameCallback((_){
           // if (service.allService.value.data==null) {
             service.allServiceList(salonType: widget.saalon?.salonType??"").then((v){
-              ShowToast(msg: v.toString());
+              // ShowToast(msg: v.toString());
               if (v) {
-                if (widget.editService) {
             service.setservice(home.homemodel.value.messages?.data?.salonServices);
-          }
+          
               }
             });
           // }
@@ -78,7 +77,7 @@ class _ServiceListScreenState extends State<ServiceListScreen> {
               // Text('For Men', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
               SizedBox(height: 4),
             //  Text("Male"),
-              _buildGrid(service.allService.value.data ?? []),
+              _buildGrid(),
     //           Text("Female"),
     //           _buildGrid(service.allService.value.data
     // ?.where((service) => service.genderId == "2")
@@ -95,7 +94,7 @@ class _ServiceListScreenState extends State<ServiceListScreen> {
               // Spacer(),
               Row(
                 children: [
-                   IconButton(onPressed: (){
+                 widget.editService==true?SizedBox():  IconButton(onPressed: (){
                     Navigator.push(context, MaterialPageRoute(builder: (context)=>SalonKycform(saalon: widget.saalon,isEdit: true,)));
                    },
         style: IconButton.styleFrom(
@@ -105,10 +104,10 @@ class _ServiceListScreenState extends State<ServiceListScreen> {
             side: BorderSide(color: Colors.grey)
           ),),
          icon: Icon(Icons.arrow_back,size: 24,)),
-         SizedBox(width: 16,),
-                   Expanded(
+         SizedBox(width: 16.w,),
+                service.allService.value.message==null|| (service.male.length==0&&service.female.length==0&&service.other.length==0 )?SizedBox():   Expanded(
           child: SizedBox(
-            height: 50,
+            height: 50.h,
             
                       child: ElevatedButton(
                         onPressed: () {
@@ -116,11 +115,16 @@ class _ServiceListScreenState extends State<ServiceListScreen> {
                           if (service.isLoading.value) {
                             null;
                           }else{
-                            service.salonServiceAdd().then((v)async{
+                            service.salonServiceAdd(salonType: widget.saalon?.salonType??"").then((v)async{
                         if (v) {
                          await Get.find<HomeViewmodel>().home();
                          WidgetsBinding.instance.addPostFrameCallback((_){
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=>AddBarberScreen(saalon: widget.saalon,)));});
+                          if (widget.editService) {
+                            Navigator.pop(context);
+                          }else{
+                         Navigator.push(context, MaterialPageRoute(builder: (context)=>AddBarberScreen(saalon: widget.saalon,)));   
+                          }
+                          });
                           // return Navigator.pop(context);
                         }
                       });
@@ -147,18 +151,24 @@ class _ServiceListScreenState extends State<ServiceListScreen> {
     );
   }
 
-  Widget _buildGrid(List<Datum> services) {
-    var male = services.where((service) => service.genderId.toString() == "1")
-    .toList() ?? [];
-      var female = services.where((service) => service.genderId.toString() == "2")
-    .toList() ?? [];
-      var other = services.where((service) => service.genderId.toString() == "3")
-    .toList() ?? [];
+  Widget _buildGrid() {
+    
     // print(services[0].toJson());
     return Obx(
-      ()=> service.allService.value.message==null?Center(child: CircularProgressIndicator(),): Column(
+      ()=> service.allService.value.message==null?Center(child: CircularProgressIndicator(),):(service.male.length==0&&service.female.length==0&&service.other.length==0 )?
+      SizedBox(
+              height: 350.h,
+              child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Center(child: Text("No Service",style: GoogleFonts.montserrat(), ),),
+                Text("Contact to Customer Care to Create New Service",style: GoogleFonts.openSans(fontSize: 18.sp,fontWeight: FontWeight.w600,),),
+              ],
+            ), ):
+       Column(
         children: [
-            male.length==0?SizedBox(): Column(
+         service.male.length==0?SizedBox():  Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -166,7 +176,7 @@ class _ServiceListScreenState extends State<ServiceListScreen> {
                  Text('Select the services that you want to list',style: GoogleFonts.openSans(fontSize: 14.sp,fontWeight: FontWeight.w400,),),
            SizedBox(height: 8,),
               Padding( 
-                padding: const EdgeInsets.symmetric(vertical: 4.0,horizontal: 20),
+                padding:  EdgeInsets.symmetric(vertical: 4.0.sp,horizontal: 20.sp),
                 child: GridView.builder(
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
@@ -176,9 +186,9 @@ class _ServiceListScreenState extends State<ServiceListScreen> {
                     crossAxisSpacing: 8,
                     mainAxisSpacing: 4,
                   ),
-                  itemCount: male.length,
+                  itemCount: service.male.length,
                   itemBuilder: (context, index) {
-                    return Row(
+                    return  Row(
                       children: [
                           Transform.scale(
                       scale: 1.2, 
@@ -195,17 +205,20 @@ class _ServiceListScreenState extends State<ServiceListScreen> {
                              fillColor: MaterialStateProperty.all(Colors.white),
                              
                               checkColor: Colors.indigo.shade900,
-                            value: male[index].isSelected, 
+                            value: service.male[index].isSelected, 
                             onChanged: (v) {
-                            service.allService.value.data?[index].isSelected=v!;
-                            service.allService.refresh();
+                              service.male[index].isSelected=v!;
+                              service.male.refresh();
+                            // service.allService.value.data?[index].isSelected=v!;
+                            // service.allService.refresh();
+                            
                                 
                           }),
                         ),
                         Expanded(
                           child: Text(
                             textAlign: TextAlign.start,
-                            male[index].serviceMasterName??"",
+                            service.male[index].serviceMasterName??"",
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                             style: GoogleFonts.jost(fontSize: 16.sp,color: Colors.grey.shade700,fontWeight: FontWeight.w400,)
@@ -219,7 +232,9 @@ class _ServiceListScreenState extends State<ServiceListScreen> {
             ],
           ),
        
-            female.length==0?SizedBox(): Column(
+            service.female.length==0?SizedBox(): Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
             children: [
                  Text("For Women",style: GoogleFonts.openSans(fontSize: 20.sp,fontWeight: FontWeight.bold,)),
                  Text('Select the services that you want to list',style: GoogleFonts.openSans(fontSize: 14.sp,fontWeight: FontWeight.w400,),),
@@ -235,7 +250,7 @@ class _ServiceListScreenState extends State<ServiceListScreen> {
                     crossAxisSpacing: 8,
                     mainAxisSpacing: 4,
                   ),
-                  itemCount: female.length,
+                  itemCount: service.female.length,
                   itemBuilder: (context, index) {
                     return Row(
                       children: [
@@ -254,17 +269,19 @@ class _ServiceListScreenState extends State<ServiceListScreen> {
                              fillColor: MaterialStateProperty.all(Colors.white),
                              
                               checkColor: Colors.indigo.shade900,
-                            value: female[index].isSelected, 
+                            value: service.female[index].isSelected, 
                             onChanged: (v) {
-                            service.allService.value.data?[index].isSelected=v!;
-                            service.allService.refresh();
+                            // service.allService.value.data?[index].isSelected=v!;
+                            // service.allService.refresh();
+                            service.female[index].isSelected=v!;
+                              service.female.refresh();
                                 
                           }),
                         ),
                         Expanded(
                           child: Text(
                             textAlign: TextAlign.start,
-                            female[index].serviceMasterName??"",
+                            service.female[index].serviceMasterName??"",
                             overflow: TextOverflow.ellipsis,
                             maxLines: 2,
                             style: GoogleFonts.jost(fontSize: 16.sp,color: Colors.grey.shade700,fontWeight: FontWeight.w400,)
@@ -278,13 +295,15 @@ class _ServiceListScreenState extends State<ServiceListScreen> {
             ],
           ),
        
-         other.length==0?SizedBox(): Column(
+         service.other.length==0?SizedBox(): Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
             children: [
                  Text("For Other",style: GoogleFonts.openSans(fontSize: 20.sp,fontWeight: FontWeight.bold,)),
                  Text('Select the services that you want to list',style: GoogleFonts.openSans(fontSize: 14.sp,fontWeight: FontWeight.w400,),),
           
               Padding( 
-                padding: const EdgeInsets.symmetric(vertical: 4.0,horizontal: 20),
+                padding:  EdgeInsets.symmetric(vertical: 4.0.sp,horizontal: 20.sp),
                 child: GridView.builder(
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
@@ -294,7 +313,7 @@ class _ServiceListScreenState extends State<ServiceListScreen> {
                     crossAxisSpacing: 8,
                     mainAxisSpacing: 4,
                   ),
-                  itemCount: other.length,
+                  itemCount: service.other.length,
                   itemBuilder: (context, index) {
                     return Row(
                       children: [
@@ -313,17 +332,19 @@ class _ServiceListScreenState extends State<ServiceListScreen> {
                              fillColor: MaterialStateProperty.all(Colors.white),
                              
                               checkColor: Colors.indigo.shade900,
-                            value: other[index].isSelected, 
+                            value: service.other[index].isSelected, 
                             onChanged: (v) {
-                            service.allService.value.data?[index].isSelected=v!;
-                            service.allService.refresh();
+                            // service.allService.value.data?[index].isSelected=v!;
+                            // service.allService.refresh();
+                            service.other[index].isSelected=v!;
+                              service.other.refresh();
                                 
                           }),
                         ),
                         Expanded(
                           child: Text(
                             textAlign: TextAlign.start,
-                            other[index].serviceMasterName??"",
+                            service.other[index].serviceMasterName??"",
                             overflow: TextOverflow.ellipsis,
                             maxLines: 2,
                             style: GoogleFonts.jost(fontSize: 16.sp,color: Colors.grey.shade700,fontWeight: FontWeight.w400,)

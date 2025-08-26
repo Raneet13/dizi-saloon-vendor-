@@ -10,13 +10,14 @@ import 'package:timelines_plus/timelines_plus.dart';
 
 import '../../../model/cms_model.dart';
 import '../../../view_model/home_viewmodel.dart';
+import '../../auth/login/loginscreen.dart';
 import '../../barber/add_barber_form.dart';
 import '../../order/order_screen.dart';
 import '../../salon_service/salon_service_screen.dart';
 
 class KYCWidget extends StatelessWidget {
   LoginUser? saalon;
-
+  final bool? gologin;
   bool year2023 = true;
  
    final List<String> steps = [
@@ -26,7 +27,7 @@ class KYCWidget extends StatelessWidget {
     "Take Order ",
   ];
 
-  KYCWidget({required this.saalon, super.key});
+  KYCWidget({required this.saalon,this.gologin, super.key});
    final home = Get.find<HomeViewmodel>();
   @override
   Widget build(BuildContext context) {
@@ -223,7 +224,15 @@ class KYCWidget extends StatelessWidget {
               height: SizeConfig.blockHeight * 4,
               child: ElevatedButton(
                 onPressed: () {
-                if (home.homemodel.value.messages?.data?.centerFacilities !=true) { 
+                  if (gologin==true) {
+                    Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>SignInScreen(),
+                                )
+                              );
+                  } else {
+                   if (home.homemodel.value.messages?.data?.centerFacilities !=true) { 
                   Navigator.push(context, MaterialPageRoute(builder: (context)=>SalonKycform(saalon: saalon,)));
                     } else if(home.homemodel.value.messages?.data?.salonServices?.length==0){
                        Navigator.push(context, MaterialPageRoute(builder: (context)=>ServiceListScreen(saalon: saalon,)));
@@ -235,7 +244,9 @@ class KYCWidget extends StatelessWidget {
                     }
                   else{
                      Navigator.push(context, MaterialPageRoute(builder: (context)=>SalonKycform()));
+                  } 
                   }
+                
                  
                 },
                 style: ElevatedButton.styleFrom(

@@ -7,8 +7,12 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../model/home_model.dart';
+import '../salon_service/salon_service_screen.dart';
+
 class EditMyserviceScreen extends StatelessWidget {
-   EditMyserviceScreen({super.key});
+  LoginUser? saalon;
+   EditMyserviceScreen({this.saalon, super.key});
 final service = Get.find<SalonViewmodel>();
   @override
   Widget build(BuildContext context) {
@@ -21,10 +25,39 @@ final service = Get.find<SalonViewmodel>();
 
     return Scaffold(
       appBar: AppBar(
+        // centerTitle: false,
         title:  Text("My Services Details",style: GoogleFonts.montserrat(fontSize: 25.sp,fontWeight: FontWeight.w600),),
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
         elevation: 1,
+        actions: [
+           Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            child: ElevatedButton.icon(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Color(0xFF002B5B),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>ServiceListScreen(saalon: saalon,editService: true,)));
+                //   if (home.homemodel.value.messages?.data?.salonServices?.length==0) {
+                //     ShowToast(msg: "First You have to Add your Salon SErvice then Add Barber");
+                //   }else
+                // Navigator.push(
+                //                   context,
+                //                   MaterialPageRoute(
+                //                     builder: (context) => AddBarberScreen(),
+                //                   ),
+                //                 );
+                
+              },
+              icon: const Icon(Icons.add_circle_outline, size: 24,color: Colors.white,),
+              label:  Text("Add Service", style: GoogleFonts.montserrat(fontSize: 14.sp,color: Colors.white,fontWeight: FontWeight.bold),),
+            ),
+          ),
+        ],
       ),
       body: Obx(
         ()=>service.isLoading.value? Center(child: CircularProgressIndicator(),): Padding(
@@ -143,7 +176,7 @@ final service = Get.find<SalonViewmodel>();
                               children: [
                                  GestureDetector(
                                           onTap: () {
-                                            service.updateService(serviceId: service.salonService.value.messages?.data?[int].centerServiceId??"", centerId: service.salonService.value.messages?.data?[int].centerId??"", serciceStatus: service.salonService.value.messages?.data?[int].status==null||service.salonService.value.messages?.data?[int].status=="1"?"0":"1",price: "0");
+                                            service.updatesalonService(serviceId: service.salonService.value.messages?.data?[int].serviceId??"", centerId: service.salonService.value.messages?.data?[int].centerId??"", serciceStatus: service.salonService.value.messages?.data?[int].status==null||service.salonService.value.messages?.data?[int].status=="1"?"0":"1");
                                             // setState(() {
                                             //   isToggled = !isToggled;
                                             // });

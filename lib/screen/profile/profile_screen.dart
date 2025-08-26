@@ -273,7 +273,7 @@ class ProfileScreen extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) =>  EditMyserviceScreen()),
+                          builder: (context) =>  EditMyserviceScreen(saalon: profile.homemodel.value.messages?.data?.loginUser,)),
                     );
                   }),
                   _buildOptionTile(Icons.share, 'Refer & Earn', () {

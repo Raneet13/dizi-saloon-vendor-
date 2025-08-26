@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../view_model/home_viewmodel.dart';
+import '../../mysalon/my_salon_screen.dart';
+import '../../profile/widget/my_salon_screen.dart';
 
 class SalonDetailsCard extends StatelessWidget {
    SalonDetailsCard({super.key});
@@ -48,7 +50,7 @@ class SalonDetailsCard extends StatelessWidget {
                     height: 35,
                     child: ElevatedButton(
                       onPressed: () {
-                         Navigator.push(context, MaterialPageRoute(builder: (context)=>DetialsOfDocument(details: home.cmsemodel.value.data?.salonDetails)));
+                         Navigator.push(context, MaterialPageRoute(builder: (context)=>MySalonWidgetScreen()));
                       },
                       style: ElevatedButton.styleFrom(
                         tapTargetSize: MaterialTapTargetSize.shrinkWrap,
