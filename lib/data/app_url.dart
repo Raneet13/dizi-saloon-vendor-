@@ -1,7 +1,7 @@
 class AppUrl {
-  static var baseUrl = 'https://collegeprojectz.com/dizisalon/SALONAPI/';
-  static var imageApi = 'https://collegeprojectz.com/dizisalon/uploads/';
-  static var newBaseImage = 'https://collegeprojectz.com/dizisalon/uploads/salon_gallery/' ;
+  static var baseUrl = 'https://dizisalon.com/SALONAPI/';
+  static var imageApi = 'https://dizisalon.com/uploads/';
+  static var newBaseImage = 'https://dizisalon.com/uploads/salon_gallery/' ;
   // static var ferantaAbout = 'https://www.feranta.in/about-us/';
   // static var ferantaPrivacy = 'https://www.feranta.in/privacy-policy/';
   // static var ferantaTerms = 'https://www.feranta.in/term-and-condition/';

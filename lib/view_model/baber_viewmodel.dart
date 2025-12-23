@@ -320,6 +320,12 @@ barberlogo.value=barber?.messages?.data?.singleBarber?.profileImage??"";
 selectedServices.value=(barber?.messages?.data?.services ?? [])
     .where((service) => service.isSelected == false)
     .toList();
+    selectedServices.value = selectedServices.map((service) => service..isSelected = true).toList();
+    for (var i = 0; i < selectedServices.length; i++) {
+      Get.find<HomeViewmodel>().homemodel.value.messages?.data?.salonServices?[i].isSelected=true;
+    }
+    Get.find<HomeViewmodel>().homemodel.refresh();
+    selectedServices.refresh();
 // await barberservice(barber?.messages?.data?.services??[]);
 refresh();
 }

@@ -7,7 +7,13 @@ import '../home/domy_home_screen.dart';
 import '../navigation/bottom_navigation.dart';
 
 class SplashScreen extends StatefulWidget {
-  const SplashScreen({super.key});
+  final bool launchedFromNotification;
+
+  const SplashScreen({
+    super.key,
+    required this.launchedFromNotification,
+  });
+  // const SplashScreen({super.key});
 
   @override
   State<SplashScreen> createState() => _SplashScreenState();
@@ -18,10 +24,11 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    if (!widget.launchedFromNotification) {
     Future.delayed(Duration(seconds:3),(){
       viewScreen();
     });
-
+    }
   }
   Future viewScreen()async{
     final prefs = await SharedPreferences.getInstance();
@@ -39,7 +46,7 @@ class _SplashScreenState extends State<SplashScreen> {
               Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => DomyHomeScreen(),//DomyHomeScreen(),//SignInScreen()
+                                  builder: (context) =>  DomyHomeScreen(),//DomyHomeScreen(),//SignInScreen()
                                 ),result: (route)=>false
                               );
             }

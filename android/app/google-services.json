@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "264766558325",
+    "project_id": "dizisalon-e373b",
+    "storage_bucket": "dizisalon-e373b.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:264766558325:android:e4de8eadb032515af8683c",
+        "android_client_info": {
+          "package_name": "com.dizisalon.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAO6qet5CJ5OORc3ashBzNcZODYoigzX4U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:264766558325:android:b495494e7aed8221f8683c",
+        "android_client_info": {
+          "package_name": "com.dizisalon.partner"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAO6qet5CJ5OORc3ashBzNcZODYoigzX4U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

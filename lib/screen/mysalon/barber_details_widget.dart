@@ -1,6 +1,8 @@
 import 'package:dizisalon_vender/data/app_url.dart';
+import 'package:dizisalon_vender/main.dart';
 import 'package:dizisalon_vender/model/orderlist_model.dart';
 import 'package:dizisalon_vender/screen/mysalon/showQr_screen.dart';
+import 'package:dizisalon_vender/screen/navigation/bottom_navigation.dart';
 import 'package:dizisalon_vender/view_model/salon_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -12,7 +14,8 @@ import 'package:url_launcher/url_launcher.dart';
 
 class customerDetails extends StatelessWidget {
   Appointment? orderItem;
-   customerDetails({required this.orderItem, super.key});
+  final bool fromNotification;
+   customerDetails({required this.orderItem,this.fromNotification = false, super.key});
    void _showConfirmDialog(BuildContext context) {
     showDialog(
       context: context,
@@ -69,9 +72,19 @@ class customerDetails extends StatelessWidget {
                 const SizedBox(height: 16),
                  InkWell(
                   onTap: (){
-                    Get.find<SalonViewmodel>().updateOrder(apontId: orderItem?.appointmentId??"", status: "3");
-                    Navigator.pop(context);
-                    Navigator.pop(context);
+                      Get.find<SalonViewmodel>().updateOrder(apontId: orderItem?.appointmentId??"", status: "3");
+                    if (fromNotification) {
+  navigatorKey.currentState?.pushAndRemoveUntil(
+    MaterialPageRoute(builder: (_) => MainScreen()),
+    (route) => false,
+  );
+} else {
+  Navigator.pop(context);
+  Navigator.pop(context);
+}
+                  
+                    // Navigator.pop(context);
+                    // Navigator.pop(context);
                   },
                    child: Container(
                                             padding: EdgeInsets.symmetric(horizontal: 12.sp, vertical: 4.sp),
@@ -79,13 +92,13 @@ class customerDetails extends StatelessWidget {
                                               color:Colors.red,
                                               borderRadius: BorderRadius.circular(6),
                                             ),
-                                            child: Text("Cancel",style: TextStyle(color: Colors.white),),),
+                                            child: Text("Yes",style: TextStyle(color: Colors.white,fontSize: 14.sp,fontWeight: FontWeight.bold),),),
                  ),
-                const SizedBox(height: 8),
+                const SizedBox(height: 16),
                 TextButton(
                   onPressed: () => Navigator.pop(context),
                   child: const Text(
-                    'Cancel',
+                    'No',
                     style: TextStyle(color: Colors.grey),
                   ),
                 ),
@@ -103,6 +116,21 @@ class customerDetails extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
+        automaticallyImplyLeading: false, // disable default back button
+  leading: IconButton(
+    icon: Icon(Icons.arrow_back, color: Colors.black),
+    onPressed: () {
+      if (fromNotification) {
+        // ❗ Go directly to Home when opened from notification
+        navigatorKey.currentState?.pushAndRemoveUntil(
+          MaterialPageRoute(builder: (_) => MainScreen()),
+          (route) => false,
+        );
+      } else {
+        Navigator.pop(context);
+      }
+    },
+  ),
         title: Text(
           'Customer Details',
           style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),

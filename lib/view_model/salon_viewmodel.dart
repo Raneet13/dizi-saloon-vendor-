@@ -428,6 +428,7 @@ if (selectedWeekList.length==0 ) {
     } finally {
       isLoading(false);
     }
+    
 }
   
 
@@ -488,19 +489,20 @@ if (selectedWeekList.length==0 ) {
     return rsp;
   }
   //all Order
-    Future allOrderList() async {
+    Future allOrderList({String? apponmentId}) async {
     late bool rsp =false;
     isLoading(true);
     try {
               final prefs = await SharedPreferences.getInstance();
         var  userId = await prefs.getString(
             'userId');
-      var resp = await SalonApiRepository().orderListRepo(userId: userId!);
+      var resp = await SalonApiRepository().orderListRepo(userId: userId!,appoinmentI: apponmentId??"");
       print(resp);
       if (resp != null ) {//&& !resp["error"]
         isLoading(false);
         allOrderlist.value=OrderListModel.fromJson(resp);
-        resp =true;
+        return resp;
+        rsp =true;
       } else {
         ShowToast(msg: resp["message"].toString());
       }

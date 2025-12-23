@@ -24,13 +24,14 @@ class AuthApiRepository {
     return response;
   }
   Future loginRepo({
-    required String phone
+    required String phone,
+    required String deviceToken
   }) async {
     late var response;
 
     try {
       FormData formData =
-          FormData.fromMap({'contact': phone});
+          FormData.fromMap({'contact': phone,'device_token':deviceToken});
       response = await NetworkApiService()
           .postApi(url: AppUrl.loginOtp, formData: formData);
 

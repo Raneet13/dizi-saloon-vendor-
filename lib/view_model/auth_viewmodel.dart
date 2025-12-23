@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 import 'package:dizisalon_vender/model/salontype_model.dart' show Gender, GetAllSalonTypeModel;
 import 'package:dizisalon_vender/static/show_toast/showTost_msg.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -78,8 +79,9 @@ class AuthViewmodel extends GetxController {
     late bool rsp = false;
     isLoading(true);
     try {
+      var token = await getDeviceTokenToSendNotification();
       var resp = await AuthApiRepository()
-          .loginRepo(phone: phone.text);
+          .loginRepo(phone: phone.text,deviceToken: token??"");
       print(resp);
       if (resp != null && !resp["error"] ) {//&& !resp["error"]
         isLoading(false);
@@ -101,7 +103,13 @@ class AuthViewmodel extends GetxController {
     }
     return rsp;
   }
-  
+   Future<String?> getDeviceTokenToSendNotification() async {
+    final FirebaseMessaging _fcm = FirebaseMessaging.instance;
+    final token = await _fcm.getToken();
+    return token;
+    // deviceTokenToSendPushNotification = token.toString();
+    print("Token Value ${token.toString()}");
+  }
  Future otpVerify() async {
     late bool rsp = false;
     isLoading(true);

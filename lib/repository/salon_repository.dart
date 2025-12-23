@@ -120,8 +120,10 @@ class SalonApiRepository {
 
 // Now create FormData
 FormData formData = FormData.fromMap(formMap);
+print(formData.fields.map((e) => '${e.key}: ${e.value}').toList());
       response = await NetworkApiService()
           .postApi(url: AppUrl.kycSubmit, formData: formData);
+    print(formData.fields.map((e) => '${e.key}: ${e.value}').toList());
 
       // response = await loginOtpModel.fromJson(data);
     } catch (e) {
@@ -157,12 +159,12 @@ FormData formData = FormData.fromMap(formMap);
     }
     return response;
   }
-   Future orderListRepo({required String userId}) async {
+   Future orderListRepo({required String userId, String? appoinmentI}) async {
     late var response;
 
     try {
    FormData formData =
-          FormData.fromMap({'user_id': userId});
+          FormData.fromMap({'user_id': userId,'apointment_id':appoinmentI??""});
       response = await NetworkApiService()
           .postApi(url: AppUrl.orderList, formData: formData);
       // response = await loginOtpModel.fromJson(data);

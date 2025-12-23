@@ -193,7 +193,7 @@ Get.find<SalonViewmodel>().allOrderList();
                             width: 8.w,
                             height: 80.h,
                             decoration: BoxDecoration(
-                              color: Colors.red,
+                              color:orderItem?.isConfirm=="3"? Colors.red:orderItem?.isConfirm=="4"?Colors.green: Color(0xFF002B5B),
                               borderRadius: BorderRadius.only(
                                 topLeft: Radius.circular(10),
                                 bottomLeft: Radius.circular(10),
